@@ -1,27 +1,29 @@
 import { useState } from 'react';
 
-const InputBox = ({ onSend }) => {
-  const [input, setInput] = useState('');
+const InputBox = ({ onSend, onEnterPress }) => {
+  const [text, setText] = useState('');
 
-  const handleSend = () => {
-    if (input.trim()) {
-      onSend(input);
-      setInput('');
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && text.trim()) {
+      onSend(text);  // Send message
+      setText(''); // Clear input field
     }
   };
 
   return (
-    <div className="flex space-x-4 p-4">
+    <div className="flex items-center p-4">
       <input
         type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Type your message..."
-        className="flex-grow p-2 border rounded-lg focus:outline-none"
+        value={text}
+        onChange={handleChange}
+        onKeyPress={handleKeyPress}
+        className="flex-grow p-2 border rounded-md"
+        placeholder="Type a message..."
       />
-      <button onClick={handleSend} className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-        Send
-      </button>
     </div>
   );
 };
