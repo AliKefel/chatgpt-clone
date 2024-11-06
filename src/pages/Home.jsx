@@ -11,7 +11,9 @@ const Home = () => {
   const chatEndRef = useRef(null); // For auto-scrolling
 
   const handleSend = async (text) => {
+    // Add the user's message
     setMessages((prev) => [...prev, { sender: 'user', text }]);
+
     setIsTyping(true); // Start typing effect for AI message
 
     try {
@@ -60,7 +62,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col h-screen w-full items-center justify-center bg-gray-500 p-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
+      <div className="w-full max-w-md bg-black rounded-lg shadow-md overflow-hidden flex flex-col">
         <ChatBox messages={messages} typingMessage={typingMessage} />
         <div ref={chatEndRef} /> {/* Empty div to enable scrolling */}
         <InputBox onSend={handleSend} />

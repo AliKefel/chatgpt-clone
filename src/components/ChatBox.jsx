@@ -1,18 +1,36 @@
+import React from 'react';
+
 const ChatBox = ({ messages, typingMessage }) => {
   return (
-    <div className="flex flex-col p-4 space-y-2 overflow-y-auto max-h-[70vh] bg-black">
+    <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black text-white">
       {messages.map((message, index) => (
         <div
           key={index}
-          className={`message ${message.sender === 'ai' ? 'ai' : 'user'}`}
+          className={`flex items-start space-x-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
         >
-          <p>{message.text}</p>
+          <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-300">
+            {/* User and AI icons */}
+            {message.sender === 'user' ? (
+              <img src="/path-to-user-icon.png" alt="User" className="w-full h-full object-cover" />
+            ) : (
+              <img src="/path-to-ai-icon.png" alt="AI" className="w-full h-full object-cover" />
+            )}
+          </div>
+          <div
+            className={`max-w-xs p-3 rounded-lg ${message.sender === 'user' ? 'bg-blue-500 text-right' : 'bg-gray-700'}`}
+          >
+            <p>{message.text}</p>
+          </div>
         </div>
       ))}
-      {/* Display typing effect when AI is typing */}
       {typingMessage && (
-        <div className="message ai">
-          <p>{typingMessage}</p>
+        <div className="flex items-start space-x-3 justify-start">
+          <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-300">
+            <img src="/path-to-ai-icon.png" alt="AI" className="w-full h-full object-cover" />
+          </div>
+          <div className="max-w-xs p-3 bg-gray-700 rounded-lg">
+            <p>{typingMessage}</p>
+          </div>
         </div>
       )}
     </div>
