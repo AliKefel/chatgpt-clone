@@ -11,9 +11,9 @@ const ChatBox = ({ messages, typingMessage }) => {
           <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-300">
             {/* User and AI icons */}
             {message.sender === 'user' ? (
-              <img src="/path-to-user-icon.png" alt="User" className="w-full h-full object-cover" />
+              <img src="/ai-icon.png" alt="User" className="w-full h-full object-cover" />
             ) : (
-              <img src="/path-to-ai-icon.png" alt="AI" className="w-full h-full object-cover" />
+              <img src="/ai-icon.png" alt="AI" className="w-full h-full object-cover" />
             )}
           </div>
           <div
