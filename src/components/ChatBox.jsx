@@ -1,6 +1,6 @@
 const ChatBox = ({ messages, typingMessage }) => {
   return (
-    <div className="flex flex-col p-4 space-y-2 overflow-y-auto max-h-[70vh] background-black">
+    <div className="flex flex-col p-4 space-y-2 overflow-y-auto max-h-[70vh] bg-black">
       {messages.map((message, index) => (
         <div
           key={index}
