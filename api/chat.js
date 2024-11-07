@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
     try {
       const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o",
         messages: [
           { role: "system", content: "You are a stock market analysis and investment advisor assistant." },
           { role: "user", content: message },
