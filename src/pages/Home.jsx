@@ -1,3 +1,4 @@
+/ Home Component
 import { useState, useEffect, useRef } from 'react';
 import ChatBox from '../components/ChatBox.jsx';
 import InputBox from '../components/InputBox.jsx';
@@ -6,7 +7,6 @@ const Home = () => {
   const [messages, setMessages] = useState([
     { sender: 'ai', text: 'Hello! How can I help you today?' },
   ]);
-  const [typingMessage, setTypingMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false); // AI typing state
   const chatEndRef = useRef(null); // For auto-scrolling
 
@@ -26,28 +26,13 @@ const Home = () => {
       });
 
       const data = await response.json();
-      simulateTypingEffect(data.reply);
+      setIsTyping(false); // AI finished typing
+      setMessages((prev) => [...prev, { sender: 'ai', text: data.reply }]);
     } catch (error) {
       console.error('Error:', error);
+      setMessages((prev) => [...prev, { sender: 'ai', text: 'Sorry, there was an error.' }]);
+      setIsTyping(false);
     }
-  };
-
-  // Function to simulate typing effect
-  const simulateTypingEffect = (text) => {
-    setTypingMessage(''); // Clear previous typing message
-    let index = 0;
-    const typingInterval = setInterval(() => {
-      setTypingMessage((prev) => prev + text.charAt(index));
-      index += 1;
-      if (index === text.length) {
-        clearInterval(typingInterval); // Stop the typing effect
-        setIsTyping(false); // AI finished typing
-        setMessages((prev) => [
-          ...prev,
-          { sender: 'ai', text: text },
-        ]);
-      }
-    }, 50); // Adjust speed here (50ms per character)
   };
 
   // Auto-scroll the chat box to the latest message
@@ -63,7 +48,7 @@ const Home = () => {
   return (
     <div className="flex flex-col h-screen w-full items-center justify-center bg-gray-500 p-4">
       <div className="w-full max-w-md bg-black rounded-lg shadow-md overflow-hidden flex flex-col">
-        <ChatBox messages={messages} typingMessage={typingMessage} />
+        <ChatBox messages={messages} isTyping={isTyping} />
         <div ref={chatEndRef} /> {/* Empty div to enable scrolling */}
         <InputBox onSend={handleSend} />
       </div>

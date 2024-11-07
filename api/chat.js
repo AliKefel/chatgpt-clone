@@ -10,16 +10,18 @@ export default async function handler(req, res) {
     try {
       // Send the request to OpenAI's chat completion API
       const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini", 
+        model: "gpt-3.5-turbo", // Use a valid model name
         messages: [
           { role: "system", content: "You are a smart and helpful assistant." },
-
           { role: "user", content: message },
         ],
       });
 
+      // Log the entire response for debugging
+      console.log("API Response:", completion);
+
       // Extract and send back the assistant's reply
-      const reply = completion.choices[0].message.content;
+      const reply = completion.choices[0]?.message.content || "No response from assistant.";
       res.status(200).json({ reply });
     } catch (error) {
       console.error("Error:", error);
