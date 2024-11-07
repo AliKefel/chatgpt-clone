@@ -32,18 +32,25 @@ const Home = () => {
   };
 
   const simulateTypingEffect = (text) => {
-    setTypingMessage('');
+    setTypingMessage('');  // Clear any previous typing message
     let index = 0;
+
     const typingInterval = setInterval(() => {
       setTypingMessage((prev) => prev + text.charAt(index));
       index += 1;
+
       if (index === text.length) {
         clearInterval(typingInterval);
-        setIsTyping(false);
+
+        // Finalize the typing effect
         setMessages((prev) => [
           ...prev,
           { sender: 'ai', text: text },
         ]);
+
+        // Clear typing state
+        setTypingMessage('');
+        setIsTyping(false);
       }
     }, 50); // Adjust speed here (50ms per character)
   };
