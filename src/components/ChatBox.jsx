@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown'; // Importing react-markdown
 
 const ChatBox = ({ messages, typingMessage }) => {
   return (
@@ -19,17 +20,20 @@ const ChatBox = ({ messages, typingMessage }) => {
           <div
             className={`max-w-xs p-3 rounded-lg ${message.sender === 'user' ? 'bg-blue-500 text-right' : 'bg-gray-700'}`}
           >
-            <p>{message.text}</p>
+            {/* Render the message as markdown */}
+            <ReactMarkdown>{message.text}</ReactMarkdown>
           </div>
         </div>
       ))}
+      
+      {/* Display typing message with Markdown */}
       {typingMessage && (
         <div className="flex items-start space-x-3 justify-start">
           <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-300">
             <img src="/path-to-ai-icon.png" alt="AI" className="w-full h-full object-cover" />
           </div>
           <div className="max-w-xs p-3 bg-gray-700 rounded-lg">
-            <p>{typingMessage}</p>
+            <ReactMarkdown>{typingMessage}</ReactMarkdown> {/* Render the typing message as markdown */}
           </div>
         </div>
       )}
