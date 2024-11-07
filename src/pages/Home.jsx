@@ -10,8 +10,10 @@ const Home = () => {
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef(null);
 
-  // Generate a prompt based on user input for requirements gathering
-  const createPrompt = (userInput) => {
+  // Generate a specific response based on user input for requirements gathering
+  const createResponse = (userInput) => {
+    userInput = userInput.toLowerCase();
+    
     if (userInput.includes("client needs") || userInput.includes("requirements")) {
       return "Coach Valerie needs an app to manage her volleyball team. It should list the best players, create scrimmage teams, and track player performance.";
     } else if (userInput.includes("players") && userInput.includes("team")) {
@@ -20,8 +22,10 @@ const Home = () => {
       return "The app will have data on each player's blocking and attacking averages, updated after each match.";
     } else if (userInput.includes("platform") || userInput.includes("device")) {
       return "The app should work on both phones and laptops for ease of access.";
+    } else if (userInput.includes("training") || userInput.includes("practice")) {
+      return "The team practices 2 or 3 times a week, with a game each weekend. Scrimmage teams are created during each practice.";
     } else {
-      return "Act as Coach Valerie's assistant. Help clarify requirements for her volleyball team management app.";
+      return null; // Fallback to OpenAI if no specific response matches
     }
   };
 
@@ -29,23 +33,27 @@ const Home = () => {
     setMessages((prev) => [...prev, { sender: 'user', text }]);
     setIsTyping(true);
 
-    // Use createPrompt to craft a more relevant query for gathering requirements
-    const prompt = createPrompt(text);
+    // Check if we can create a direct response
+    const directResponse = createResponse(text);
+    
+    if (directResponse) {
+      simulateTypingEffect(directResponse);  // Show direct response
+    } else {
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message: text }),
+        });
 
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: prompt }),
-      });
-
-      const data = await response.json();
-      simulateTypingEffect(data.reply);
-    } catch (error) {
-      console.error('Error:', error);
-      setIsTyping(false);
+        const data = await response.json();
+        simulateTypingEffect(data.reply);
+      } catch (error) {
+        console.error('Error:', error);
+        setIsTyping(false);
+      }
     }
   };
 
