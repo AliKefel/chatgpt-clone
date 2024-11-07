@@ -1,4 +1,4 @@
-/ Home Component
+
 import { useState, useEffect, useRef } from 'react';
 import ChatBox from '../components/ChatBox.jsx';
 import InputBox from '../components/InputBox.jsx';
