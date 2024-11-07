@@ -4,15 +4,29 @@ import InputBox from '../components/InputBox.jsx';
 
 const Home = () => {
   const [messages, setMessages] = useState([
-    { sender: 'ai', text: 'Hello! How can I help you today?' },
+    { sender: 'ai', text: 'Hello! I’m your stock investment analysis assistant. Ask me anything about stocks!' },
   ]);
   const [typingMessage, setTypingMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef(null);
 
+  // Generate a prompt based on user input for stock analysis
+  const createPrompt = (userInput) => {
+    if (userInput.includes("trend") || userInput.includes("analysis")) {
+      return `Provide a detailed analysis of the stock ${userInput}`;
+    } else if (userInput.includes("price")) {
+      return `What is the current price of ${userInput}?`;
+    } else {
+      return `Act as a financial advisor. Help with investment advice on ${userInput}`;
+    }
+  };
+
   const handleSend = async (text) => {
     setMessages((prev) => [...prev, { sender: 'user', text }]);
     setIsTyping(true);
+
+    // Use createPrompt to craft a more relevant query for stock analysis
+    const prompt = createPrompt(text);
 
     try {
       const response = await fetch('/api/chat', {
@@ -20,7 +34,7 @@ const Home = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ message: prompt }),
       });
 
       const data = await response.json();
@@ -32,27 +46,21 @@ const Home = () => {
   };
 
   const simulateTypingEffect = (text) => {
-    setTypingMessage('');  // Clear any previous typing message
+    setTypingMessage('');
     let index = 0;
-
     const typingInterval = setInterval(() => {
       setTypingMessage((prev) => prev + text.charAt(index));
       index += 1;
-
       if (index === text.length) {
         clearInterval(typingInterval);
-
-        // Finalize the typing effect
         setMessages((prev) => [
           ...prev,
-          { sender: 'ai', text: text },
+          { sender: 'ai', text },
         ]);
-
-        // Clear typing state
         setTypingMessage('');
         setIsTyping(false);
       }
-    }, 50); // Adjust speed here (50ms per character)
+    }, 50);
   };
 
   const scrollToBottom = () => {

@@ -1,6 +1,5 @@
 import OpenAI from 'openai';
 
-// Initialize OpenAI with the API key
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export default async function handler(req, res) {
@@ -8,19 +7,14 @@ export default async function handler(req, res) {
     const { message } = req.body;
 
     try {
-      // Send the request to OpenAI's chat completion API
       const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo", // Use a valid model name
+        model: "gpt-3.5-turbo",
         messages: [
-          { role: "system", content: "You are a smart and helpful assistant." },
+          { role: "system", content: "You are a stock market analysis and investment advisor assistant." },
           { role: "user", content: message },
         ],
       });
 
-      // Log the entire response for debugging
-      console.log("API Response:", completion);
-
-      // Extract and send back the assistant's reply
       const reply = completion.choices[0]?.message.content || "No response from assistant.";
       res.status(200).json({ reply });
     } catch (error) {
@@ -28,6 +22,6 @@ export default async function handler(req, res) {
       res.status(500).json({ error: 'Error with OpenAI API request' });
     }
   } else {
-    res.status(405).end();  // Method Not Allowed
+    res.status(405).end();
   }
 }
