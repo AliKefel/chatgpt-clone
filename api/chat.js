@@ -45,7 +45,7 @@ export default async function handler(req, res) {
                 - **If asked about team setup**: 'Each team will have 6 players for scrimmage; any unassigned players will have additional exercises.'
                 - **If asked about cost**: 'The development cost is approximately $36 per hour with junior programmers.'
     
-                Provide responses in a friendly and informative tone, ensuring the user's questions are answered with specific details where possible.`
+                Provide responses in a friendly and informative tone, ensuring the user's questions are answered with specific details where possible. only give the user one requirment per input line`
               },
               { role: "user", content: message },
         ],
