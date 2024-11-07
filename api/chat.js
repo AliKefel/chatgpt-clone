@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     try {
       // Send the request to OpenAI's chat completion API
       const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini", // or "gpt-3.5-turbo", etc., if you have access
+        model: "gpt-3.5-turbo", 
         messages: [
           { role: "system", content: "You are a helpful assistant." },
           { role: "user", content: message },
