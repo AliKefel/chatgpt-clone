@@ -4,20 +4,24 @@ import InputBox from '../components/InputBox.jsx';
 
 const Home = () => {
   const [messages, setMessages] = useState([
-    { sender: 'ai', text: 'Hello! I’m your stock investment analysis assistant. Ask me anything about stocks!' },
+    { sender: 'ai', text: 'Hello! I’m here to help you gather requirements for Coach Valerie’s volleyball team management app. Ask me anything about the app requirements!' },
   ]);
   const [typingMessage, setTypingMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef(null);
 
-  // Generate a prompt based on user input for stock analysis
+  // Generate a prompt based on user input for requirements gathering
   const createPrompt = (userInput) => {
-    if (userInput.includes("trend") || userInput.includes("analysis")) {
-      return `Provide a detailed analysis of the stock ${userInput}`;
-    } else if (userInput.includes("price")) {
-      return `What is the current price of ${userInput}?`;
+    if (userInput.includes("client needs") || userInput.includes("requirements")) {
+      return "Coach Valerie needs an app to manage her volleyball team. It should list the best players, create scrimmage teams, and track player performance.";
+    } else if (userInput.includes("players") && userInput.includes("team")) {
+      return "The scrimmage teams should have six players each, and the number of players varies yearly. Currently, there are 15 players.";
+    } else if (userInput.includes("data") || userInput.includes("stats")) {
+      return "The app will have data on each player's blocking and attacking averages, updated after each match.";
+    } else if (userInput.includes("platform") || userInput.includes("device")) {
+      return "The app should work on both phones and laptops for ease of access.";
     } else {
-      return `Act as a financial advisor. Help with investment advice on ${userInput}`;
+      return "Act as Coach Valerie's assistant. Help clarify requirements for her volleyball team management app.";
     }
   };
 
@@ -25,7 +29,7 @@ const Home = () => {
     setMessages((prev) => [...prev, { sender: 'user', text }]);
     setIsTyping(true);
 
-    // Use createPrompt to craft a more relevant query for stock analysis
+    // Use createPrompt to craft a more relevant query for gathering requirements
     const prompt = createPrompt(text);
 
     try {
