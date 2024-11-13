@@ -24,7 +24,7 @@ const ChatBox = ({ messages, typingMessage }) => {
       {typingMessage && (
         <div className="flex items-start space-x-3 justify-start">
           <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-300">
-            <img src="/ai-icon.png" alt="AI" className="w-full h-full object-cover" />
+            <img src="/volleyball.png" alt="AI" className="w-full h-full object-cover" />
           </div>
           <div className="max-w-xs p-3 bg-gray-700 rounded-lg">
             <p>{typingMessage}</p>
