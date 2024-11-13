@@ -12,7 +12,7 @@ const ChatBox = ({ messages, typingMessage }) => {
         >
           <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-300">
             {/* Display user or AI icon */}
-            <img src={message.sender === 'user' ? "/user-icon.png" : "/ai-icon.png"} alt={message.sender} className="w-full h-full object-cover" />
+            <img src={message.sender === 'user' ? "/user.png" : "/volleyball.png"} alt={message.sender} className="w-full h-full object-cover" />
           </div>
           <div className={`max-w-xs p-3 rounded-lg ${message.sender === 'user' ? 'bg-blue-500 text-right' : 'bg-gray-700'}`}>
             <ReactMarkdown>{message.text}</ReactMarkdown>

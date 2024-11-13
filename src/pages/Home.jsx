@@ -85,6 +85,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col h-screen w-full items-center justify-center bg-gray-500 p-4">
+      <h1 className='font-semibold text-md tracking-tight mb-14 text-stone-300' > Coach Valerie Design Requirements Chat </h1>
       <div className="w-full max-w-md bg-black rounded-lg shadow-md overflow-hidden flex flex-col">
         <ChatBox messages={messages} typingMessage={typingMessage} />
         <div ref={chatEndRef} />
